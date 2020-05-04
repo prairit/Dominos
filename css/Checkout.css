@@ -1,0 +1,52 @@
+﻿body {
+    background-color:#f2f2f2;
+}
+
+#billAmount{
+    background-color:white;
+}
+
+a {
+    color: #0066a7;
+    font-weight:700;
+    font-size:15px;
+}
+
+a:hover {
+    text-decoration:none;
+}
+
+ul {
+    line-height: 230%;
+    list-style-type: none;
+    font-weight: 600;
+    padding-left: 20px;
+}
+
+#placeOrder {
+    background-color: #65ab0b;
+    color: white;
+    width: 100%;
+}
+
+#exploreMenu {
+    background-color: #65ab0b;
+    color: white;
+}
+
+#emptyCart {
+    color: #888091;
+    background-color: white;
+    margin: 50px 0px 50px 0px;
+    padding: 50px 0px 50px 0px;
+}
+
+    #emptyCart h4 {
+        font-weight:700;
+        font-size:21px;
+        margin-top:10px;
+    }
+
+    #emptyCart p{
+        font-size:15px;
+    }
