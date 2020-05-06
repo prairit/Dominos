@@ -36,5 +36,10 @@ namespace Doms.Controllers
 
             return View();
         }
+
+        public ActionResult PizzaMenu()
+        {
+            return View();
+        }
     }
 }

@@ -735,14 +735,35 @@
                 </div>
             </div>
         </div>
-
+        <div id="test"></div>
 
 
     </div>
-
-
-
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
+<script>
+    $.getJSON("/api/pizza/getpizzas", function (data) {
+        console.log(data);
+        let card;
+        for (let i in data) {
+            card = `<div class="card">
+                        <div class="bottom-left"><b>₹${data[i].Prices[0].PriceOfProduct}</b></div>
+                        <div class="card-body">
+                            <h5 class="card-title">${data[i].MenuName}</h5>
+                            <p class="card-text"> Crunchy onion on a cheesy base. The pizza mania classic</p>
+                            <hr />
+                            <span><small>Size</small></span>
+                            <div class="card-action">
+                                <select id="items" name="items" required>
+                                    <option value="" selected="">Regular  &nbsp; &nbsp; ₹59</option>
+                                </select> &nbsp; &nbsp;
+                                <button type="button" id="Adtbtn" class="btn btn-outline-success btn-sm">ADD TO CART</button>
+                            </div>
+                        </div>
+                    </div>`;
+            $("#test").append(card);
+        }
+    });
+</script>
 </body>
 </html>

@@ -1,0 +1,35 @@
+﻿body {
+}
+.price{
+    color:white;
+    font-weight:700;
+    position:relative;
+    top:-25px;
+    left:5px;
+}
+
+.card-text {
+    color: #a6a6a6;
+    font-size:15px;
+}
+
+h6{
+    font-weight:700;
+}
+
+#cart {
+    position: sticky;
+    top: 50px;
+    float: right;
+    color: #768495;
+}
+
+#cart h5{
+    font-weight:700;
+}
+
+#cartImg{
+    width:60%;
+    height:60%;
+    float:right !important;
+}

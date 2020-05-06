@@ -1,0 +1,93 @@
+﻿
+@{
+    ViewBag.Title = "PizzaMenu";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link rel="stylesheet" href="~/css/PizzaMenu.css">
+
+<div id="topImages" class="my-5">
+    <div class="row text-center">
+        <div class="ml-auto">
+            <img src="~/Content/images/banner.png" height="130" width="500" />
+        </div>
+        <div class="mr-auto">
+            <img src="~/Content/images/bann.png" height="132" />
+        </div>
+    </div>
+</div>
+
+<div class="p-4">
+
+    <div class="col-3" id="cart">
+        <div class="card">
+            <img src="@Url.Content("~/Content/images/cart.png")" alt="" id="cartImg" class="ml-auto">
+            <div class="card-body">
+                <h5 class="text-center mt-5">YOUR CART IS EMPTY</h5>
+                <p class="text-center">Please add some items from the menu.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-8">
+        <div class="text-center my-4">
+            <hr style="width:40%;float:left" /><strong style="color:green">VEG PIZZAS</strong><hr style="width:40%;float:right" />
+        </div>
+
+        <div class="row" id="vegPizzas">
+            
+
+        </div>
+
+    </div>
+
+    <div class="col-8">
+        <div class="text-center my-4">
+            <hr style="width:40%;float:left" /><strong style="color:red">NON-VEG PIZZAS</strong><hr style="width:40%;float:right" />
+        </div>
+
+        <div class="row" id="nonVegPizzas">
+            
+
+        </div>
+
+    </div>
+</div>
+
+@Scripts.Render("~/bundles/jquery")
+<script>
+    $.getJSON("/api/pizza/getpizzas", function (data) {
+        console.log(data);
+        let card;
+        for (let i in data) {
+            card = `<div class="card col-lg-3 col-md-6 p-0 mx-lg-4 mx-sm-auto mx-md-auto my-3">
+                <img src="@Url.Content("~/Content/images/margherita.webp.jpeg")" class="card-img-top" alt="...">
+                <span class="price">₹${data[i].Prices[0].PriceOfProduct}</span>
+                <div class="card-body p-2">
+                    <h6 class="mt-n4">${data[i].MenuName}</h6>
+                    <p class="card-text"> Classic delight with 100% real mozzarella cheese</p>
+                    <hr />
+                    <div class="card-action">
+                        <div class="mb-2 text-center">
+                            <small class="card-text">Size</small>
+                            <select>`;
+            for (let j in data[i].Prices) {
+                card += `<option value="${data[i].Prices[j].ProductId}">${data[i].Prices[j].Size} ₹${data[i].Prices[j].PriceOfProduct}</option>`;
+            }
+                card+=      `</select>
+                        </div>
+                        <div class="text-center">
+                            <button type="button" class="btn btn-outline-success btn-sm">ADD TO CART</button>
+                        </div>
+                    </div>
+                </div>
+            </div>`;
+            if(data[i].Category == "Veg")
+                $("#vegPizzas").append(card);
+            else                
+                $("#nonVegPizzas").append(card);
+        }
+    });
+</script>
+
+
+
