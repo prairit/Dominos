@@ -11,7 +11,7 @@
             <img src="~/Content/images/banner.png" height="130" width="500" />
         </div>
         <div class="mr-auto">
-            <img src="~/Content/images/bann.png" height="132" />
+            <img src="~/Content/images/bann.png" height="130" />
         </div>
     </div>
 </div>
@@ -34,7 +34,7 @@
         </div>
 
         <div class="row" id="vegPizzas">
-            
+
 
         </div>
 
@@ -46,48 +46,93 @@
         </div>
 
         <div class="row" id="nonVegPizzas">
-            
+
+
+        </div>
+
+    </div>
+
+    <div class="col-8">
+        <div class="text-center my-4">
+            <hr style="width:40%;float:left" /><strong style="color:blue">PIZZA MANIA</strong><hr style="width:40%;float:right" />
+        </div>
+
+        <div class="row" id="pizzaMania">
+
 
         </div>
 
     </div>
 </div>
 
-@Scripts.Render("~/bundles/jquery")
-<script>
-    $.getJSON("/api/pizza/getpizzas", function (data) {
-        console.log(data);
-        let card;
-        for (let i in data) {
-            card = `<div class="card col-lg-3 col-md-6 p-0 mx-lg-4 mx-sm-auto mx-md-auto my-3">
-                <img src="@Url.Content("~/Content/images/margherita.webp.jpeg")" class="card-img-top" alt="...">
-                <span class="price">₹${data[i].Prices[0].PriceOfProduct}</span>
-                <div class="card-body p-2">
-                    <h6 class="mt-n4">${data[i].MenuName}</h6>
-                    <p class="card-text"> Classic delight with 100% real mozzarella cheese</p>
-                    <hr />
-                    <div class="card-action">
-                        <div class="mb-2 text-center">
-                            <small class="card-text">Size</small>
-                            <select>`;
-            for (let j in data[i].Prices) {
-                card += `<option value="${data[i].Prices[j].ProductId}">${data[i].Prices[j].Size} ₹${data[i].Prices[j].PriceOfProduct}</option>`;
-            }
-                card+=      `</select>
+@section scripts
+    {
+    <script>
+        $(document).ready(function () {
+            $.getJSON("/api/pizza/getpizzas", function (data) {
+                console.log(data);
+                let card;
+                for (let i in data) {
+                    card = `<div class="card col-lg-3 col-md-6 p-0 mx-lg-4 mx-sm-auto mx-md-auto my-3" id ="card-${data[i].MenuId}">
+                        <img src="@Url.Content("~/Content/images/margherita.webp.jpeg")" class="card-img-top" alt="...">
+                        <span class="price">₹${data[i].Prices[0].PriceOfProduct}</span>
+                        <div class="card-body p-2">
+                            <h6 class="mt-n4 pizzaName">${data[i].MenuName}</h6>
+                            <p class="card-text"> Classic delight with 100% real mozzarella cheese</p>
+                            <hr />
+                                <div class="mb-2 text-center">
+                                    <small class="card-text">Size</small>
+                                    <select>`;
+                    for (let j in data[i].Prices) {
+                        card += `<option price="${data[i].Prices[j].PriceOfProduct}" size="${data[i].Prices[j].Size}" value="${data[i].Prices[j].ProductId}">${data[i].Prices[j].Size} ₹${data[i].Prices[j].PriceOfProduct}</option>`;
+                    }
+                        card+=      `</select>
+                                    <button type="button" class="btn btn-outline-success btn-sm addToCart mt-2">ADD TO CART</button>
+                                </div>
                         </div>
-                        <div class="text-center">
-                            <button type="button" class="btn btn-outline-success btn-sm">ADD TO CART</button>
-                        </div>
-                    </div>
-                </div>
-            </div>`;
-            if(data[i].Category == "Veg")
-                $("#vegPizzas").append(card);
-            else                
-                $("#nonVegPizzas").append(card);
+                    </div>`;
+                    console.log(data[i].Prices.length);
+                    if (data[i].Prices.length == 1)
+                        $('#pizzaMania').append(card);
+                    else if(data[i].Category == "Veg")
+                        $("#vegPizzas").append(card);
+                    else
+                        $("#nonVegPizzas").append(card);
+                }
+                addToCartEvent();
+                changeSizeEvent();
+            });
+
+
+        });
+
+        function addToCartEvent() {
+            $(".addToCart").click(function () {
+                let selectedItem = $(this).closest('div').children("select").val();
+                let selectedPrice = $(this).closest('div').children("select").find(':selected').attr('price');
+                let selectedSize = $(this).closest('div').children("select").find(':selected').attr('size');
+                let selectedName = $(this).closest('.card-body').children("h6")[0].innerHTML;
+                console.log(selectedItem+" | "+selectedPrice +" | "+ selectedName +" | "+selectedSize);
+                displayCart(selectedItem,selectedPrice,selectedName,selectedSize);
+            });
         }
-    });
-</script>
+
+        function changeSizeEvent() {
+            $("select").change(function () {
+                let selectedPrice = $(this).find(':selected').attr('price');
+                selectedPrice = "₹" + selectedPrice;
+                $(this).closest('.card').children(".price")[0].innerHTML = selectedPrice;
+            });
+        }
+
+        function displayCart(selectedItem,selectedPrice,selectedName,selectedSize) {
+            $('#cart').find(".card").empty();
+            let content = `<div class="card-body"><button class="btn btn-danger btn-sm float-right">Remove</button><h6>${selectedName}</h6><p class="mb-3">${selectedSize}</p> ₹${selectedPrice}</div>`;
+            console.log(content);
+            $('#cart').find('.card').append(content);
+        }
+    </script>
+}
 
 
 
