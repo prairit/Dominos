@@ -7,10 +7,12 @@
 
 <div class="row">
     <div class="col-7 text-center mx-auto" id="emptyCart">
-        <img src="~/Images/cart_empty.png" alt="" />
-        <h4>YOUR CART IS EMPTY</h4>
-        <P>Please add some items from the menu.</P>
-        <button class="btn" id="exploreMenu"  onclick="location.href='/home/menu'" type="button">EXPLORE MENU</button>
+        <div id="emptyCartData">
+            <img src="~/Images/cart_empty.png" alt="" />
+            <h4>YOUR CART IS EMPTY</h4>
+            <P>Please add some items from the menu.</P>
+            <button class="btn" id="exploreMenu" onclick="location.href='/home/menu'" type="button">EXPLORE MENU</button>
+        </div>
     </div>
     <div class="col-8 p-4" style="display:none">
         <div class="numberOfItems"></div>
@@ -41,3 +43,9 @@
         </div>
     </div>
 </div>
+
+@section scripts{
+    <script>
+        console.log(localStorage.getItem("cart"));
+    </script>
+}
