@@ -27,6 +27,10 @@ textarea {
     background-color: #0066a7 !important;
 }
 
+    .navbar a {
+        color: #ffffff !important;
+    }
+
     .navbar a:hover {
         color: #0badf1 !important;
     }

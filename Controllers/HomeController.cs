@@ -12,7 +12,7 @@ namespace Doms.Controllers
         {
             return View();
         }
-
+        [Authorize]
         public ActionResult Menu()
         {
             return View();
@@ -24,7 +24,7 @@ namespace Doms.Controllers
 
             return View();
         }
-
+        [Authorize]
         public ActionResult Checkout()
         {
             return View();
@@ -36,8 +36,13 @@ namespace Doms.Controllers
 
             return View();
         }
-
+        [Authorize]
         public ActionResult PizzaMenu()
+        {
+            return View();
+        }
+        [Authorize]
+        public ActionResult OrderCompletion()
         {
             return View();
         }
